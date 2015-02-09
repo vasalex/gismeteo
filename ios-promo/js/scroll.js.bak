@@ -23,7 +23,7 @@ var i=0;
 					$slide = $('.slide').eq(slider);
 						
 						if (!$(e.target).hasClass('slide-'+slider) && $(e.target).parents('.slide-'+slider).length==0 || $el.hasClass('_scroll')) {
-							return;						
+							return false;						
 						}	
 											
 						if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {	

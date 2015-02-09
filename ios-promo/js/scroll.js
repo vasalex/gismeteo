@@ -18,7 +18,7 @@ var i=0;
 				curr_top = 0,
 				scrollTimeout = null;
 				
-				var callback = function(e) {
+				/*var callback = function(e) {
 					e.preventDefault();
 					$slide = $('.slide').eq(slider);
 						
@@ -61,7 +61,7 @@ var i=0;
 							setTimeout(function(){$el.removeClass('_scroll');}, 300);
 				    break; 	 					
 	 				}					
-				});
+				});*/
 			
 			/*switch (slider) {
 				case 0:

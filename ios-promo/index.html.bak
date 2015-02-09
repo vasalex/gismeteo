@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="/gismeteo/ios-promo/css/style.css" type="text/css">
 	<script type="text/javascript" src="/gismeteo/ios-promo/js/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="/gismeteo/ios-promo/js/jquery.mousewheel.min.js"></script>
+	<script type="text/javascript" src="/gismeteo/ios-promo/js/jquery.event.scroll.js"></script>
 	<script type="text/javascript" src="/gismeteo/ios-promo/js/scroll.js"></script>
 </head>
 <body>
@@ -67,10 +67,10 @@
 					<div class="slide-wrapper">
 						<div class="slide-content">
 							<div class="content iphone_">
-								<div class="iphone_"></div>
 								<p>Погода вокруг меня и избранные места</p>
 								<span>Планировать поездки и отдых теперь проще -<br/>добавляйте любимые места и избранное и смотрите<br/>погоду вокруг себя.</span>
-							</div>						
+							</div>
+							<div class="iphone"></div>						
 						</div>
 					</div>							
 				</div>
