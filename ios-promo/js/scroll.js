@@ -1,3 +1,5 @@
+var i=0;
+
 (function($) {
 	
 	jQuery.fn._scroll = function() {	
@@ -6,6 +8,7 @@
 				_top = 0,
 				bStarted = false,
 				slider = 0,
+				$slide = null;
 				$gistogramma = $('.gistogramma'),
 				$favorite = $('.favorite'),
 				timeout = null,
@@ -16,21 +19,13 @@
 				scrollTimeout = null;
 				
 				var callback = function(e) {
-					console.log(1);
-						if (scrollTimeout) {
-						 	clearTimeout(scrollTimeout);
-						 	scrollTimeout = null;
-						}
-						scrollTimeout = setTimeout(function(){
-							$el.removeClass('_scroll'); 		
-						}, 250);
-						if($el.hasClass('_scroll')) {
-							e.stopPropagation();
-					    e.preventDefault();
-					    e.cancelBubble = false;
-					    return false;	
-						}
-						$el.addClass('_scroll');
+					e.preventDefault();
+					$slide = $('.slide').eq(slider);
+						
+						if (!$(e.target).hasClass('slide-'+slider) && $(e.target).parents('.slide-'+slider).length==0 || $el.hasClass('_scroll')) {
+							return false;						
+						}	
+											
 						if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {	
 							if (_top == 0) return;
 							_top+= distance;
@@ -39,7 +34,9 @@
 							if (_top == max_top) return;
 							_top-= distance;
 						}
-						_animateSlide();					
+						$el.addClass('_scroll');
+						_animateSlide();
+						setTimeout(function(){$el.removeClass('_scroll');}, 300);				
 				};
 				 
 				$el.on('mousewheel wheel', function(e){callback(e)});

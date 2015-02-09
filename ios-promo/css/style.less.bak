@@ -167,7 +167,7 @@ html, body {
 		height: 100%;
 		position: fixed;
 		top: 0;
-		//zoverflow: auto;
+		//overflow: auto;
 		.btns {
 			width: 426px;
 			display: inline-block;
@@ -467,7 +467,6 @@ html, body {
 	     		-moz-transition: margin-top  0.1s ease-out 0.1s;
 	     		-o-transition: margin-top  0.1s ease-out 0.1s;
 	     		transition: margin-top 0.1s ease-out 0.1s;
-	     		
 					&:hover {
 						margin-top: 5px;		
 					}				
