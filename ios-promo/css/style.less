@@ -103,6 +103,7 @@ html, body {
 		height: 100%;
 		margin: 0 auto;
 		position: relative;
+		z-index: 1000;
 		.gistogramma {
 			width: 0px;
 			height: 49px;
@@ -168,6 +169,7 @@ html, body {
 		position: fixed;
 		top: 0;
 		//overflow: auto;
+		z-index: 1000;
 		.btns {
 			width: 426px;
 			display: inline-block;
@@ -269,10 +271,10 @@ html, body {
 				}
 			}			
 			&.slide-0 {
-				background: #f0eff4;
+				//background: #f0eff4;
 			}
 			&.slide-1 {
-				background: #f0eff4;
+				//background: #f0eff4;
 				.content {
 					width: 520px;
 					padding-left: 75px;
@@ -286,7 +288,7 @@ html, body {
 				}
 			}
 			&.slide-2 {
-				background: #f0eff4;
+				//background: #f0eff4;
 				.map {
 					width: 1999px;
 					height: 1024px;
@@ -295,7 +297,8 @@ html, body {
 					margin-top: -512px;
 					margin-left: -1000px;
 					background: url(/gismeteo/ios-promo/images/slide-2.jpg) no-repeat;
-					position: absolute;						
+					position: absolute;	
+					z-index: 995;					
 				}
 				.favorite {
 					width: 1169px;

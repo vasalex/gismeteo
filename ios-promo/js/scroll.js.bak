@@ -1,45 +1,40 @@
-var i=0;
-
 (function($) {
 	
 	jQuery.fn._scroll = function() {	
 		var $el = this,
-				step = 20,
 				_top = 0,
-				bStarted = false,
 				slider = 0,
 				$slide = null;
 				$gistogramma = $('.gistogramma'),
 				$favorite = $('.favorite'),
-				timeout = null,
-				top_percentage = -26,
 				max_top = ($('.slide').length-1)*-100,
-				distance = 100,
-				curr_top = 0,
-				scrollTimeout = null;
+				distance = 100;
 				
 				var callback = function(e) {
 					e.preventDefault();
 					$slide = $('.slide').eq(slider);
-						
-						if (!$(e.target).hasClass('slide-'+slider) && $(e.target).parents('.slide-'+slider).length==0 || $el.hasClass('_scroll')) {
-							return;						
-						}	
+					
+					var $target = $(e.target);
+					if (!$target.hasClass('slide-'+slider) &&  $target.parents('.slide-'+slider).length==0 || $el.hasClass('_scroll')) {
+						return false;						
+					}	
 											
-						if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {	
-							if (_top == 0) return;
-							_top+= distance;
-						}	
-						else {
-							if (_top == max_top) return;
-							_top-= distance;
-						}
-						$el.addClass('_scroll');
-						_animateSlide();
-						setTimeout(function(){$el.removeClass('_scroll');}, 300);				
+					if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {	
+						if (_top == 0) return;
+						_top+= distance;
+					}	
+					else {
+						if (_top == max_top) return;
+						_top-= distance;
+					}
+					$el.addClass('_scroll');
+					_animateSlide();
+					setTimeout(function(){$el.removeClass('_scroll');}, 300);			
 				};
 				 
-				$el.on('mousewheel wheel', function(e){callback(e)});
+				$(document).on('mousewheel wheel', function(e){callback(e)});
+				
+				//$el.on('mousewheel wheel', function(e){callback(e)});
 				
 			 	
 				$(document).on('keyup', function(e) {
@@ -145,21 +140,25 @@ var i=0;
   		slider = Math.abs(_top/100);
   		
   		if (slider == 1 ) {
-  			$('.slide-2 .content .iphone_').css('opacity', 0);
-  			$('.iphone-wrapper').css('opacity', 1);
+  			$('.iphone-wrapper').css({'opacity': 1});
+  			$('.slide-2 .content .iphone_').css('opacity', 0);  			
   		}
   		if (slider == 0|| slider == 2) { 
-  			$('.gistogramma').animate({'opacity':0}, 200, function(){$('.gistogramma').css('width', 0)});
-  		} 		
+  			$('.gistogramma').animate({'opacity':0}, 200, function(){$('.gistogramma').css('width', 0)});	
+  		}
+  		if (slider == 2 ) {
+  			$('.iphone-wrapper').css('z-index', 1001);
+  		}  		 		
   		setTimeout(function(){
   			if (slider == 1) { 			
   				$('.gistogramma').css('opacity', 1).animate({'width': 2000}, 300, function(){});
   				$favorite.css('top', '-50%');
   				$('.favorite-shadow').css('opacity', 0);
+  				$('.iphone-wrapper').css({'z-index': 1000});
   			}
   			if (slider == 2) {
   				$('.slide-2 .content .iphone_').css('opacity', 1); 				
-  				$('.iphone-wrapper').css('opacity', 0);
+  				$('.iphone-wrapper').css({'opacity': 0, 'z-index': 1000});
   				$('.slider .slide-3 .clouds-glare').css('opacity', 1);
   				$('.background-wrapper').removeClass('slide-3');
   				$('.slider .slide-3').addClass('with-background-slide3');
@@ -241,7 +240,6 @@ var i=0;
 		$('.arrow a').on('click', function(e) {
 			e.preventDefault();	
 			_top= -100;	
-      bStarted = true;
       _animateSlide();   					
 		});	    	
 	}
