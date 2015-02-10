@@ -7,8 +7,7 @@
 					_height: $('body').height(),
 					slides: {from: {num: 0, 'visible': 100}, to: {num: 1, 'visible': 0}}, // 0 to 1
 					deltaY: 0,
-					gist_step_count: 0,
-					position: {_top: 0, toUp: false, toDown: false, step: 0}
+					position: {_top: 0, toUp: false, toDown: false}
 				};
 	
     $el.scroll(function() {
@@ -36,9 +35,13 @@
     		num = option.slides.to.num;  
     		_max=0;
     	}
+    	
     	var odlVisible = option.slides.to.visible;
+    	
+    	//Рассчёт процентов видимости текущего и следующего слайда
     	option.slides.from.visible = Math.round((Math.abs(_max-(option.position._top-option._height*num)/option._height*100))*10)/1000;
     	option.slides.to.visible = 1-option.slides.from.visible;
+    	
     	option.deltaY = Math.abs(odlVisible-option.slides.to.visible);
     	animateSlider();  	
     });
@@ -48,13 +51,12 @@
     	if (option.position.toDown) {
 	    	switch (option.slides.from.num) { 
 	    		case 0:
-	    			roundVisible();
+	    			//roundVisible();
 	    			var $slide = $('.slide.slide-2');
 	    			$slide.find('.iphone-content.iphone-content-0').css('opacity', option.slides.from.visible);	
 	    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.to.visible);
 	    			if (option.slides.to.visible>=0.5) {
 	    				var w = 2000*((0.5-(1-option.slides.to.visible))/0.5);
-	    				if (w > 2000) w = 2000;	
 	    				$('.gistogramma').width(w);    				
 	    			}	    			
 	    		break;
@@ -75,8 +77,9 @@
 	    			if (option.slides.to.visible >= 0.2) {
 	    				var _top = 50*(0.8-(1-option.slides.to.visible))/0.8;
 	    				$('.favorite').css('top', _top+'%');	
-	    				if (_top>45) $('.favorite-shadow').css('opacity', 1); 
-	    			}	    			    		
+	    				
+	    			}
+	    			$('.gistogramma').width(2000);	    			    			    		
 	    		break;
 	    		case 2:
 	    			var $slide = $('.slide.slide-2');
@@ -107,7 +110,7 @@
     		//console.log([option.slides.from.num, option.slides.from.visible, option.slides.to.num, option.slides.to.visible]);  		
 	    	switch (option.slides.from.num) {
 	    		case 1:
-	    			roundVisible();
+	    			//roundVisible();
 	    			var $slide = $('.slide.slide-2');
 	    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.from.visible);	
 	    			$slide.find('.iphone-content.iphone-content-0').css('opacity', option.slides.to.visible);

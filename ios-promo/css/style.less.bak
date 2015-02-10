@@ -49,7 +49,6 @@ html, body {
 			opacity: 0;	
 			top: 0;
 			position: absolute;	
-			z-index: 997;	
 		}
 		.background-slide4 {
 			width: 100%;
