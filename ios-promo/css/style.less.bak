@@ -48,7 +48,8 @@ html, body {
 			background-size: cover;
 			opacity: 0;	
 			top: 0;
-			position: absolute;		
+			position: absolute;	
+			z-index: 997;	
 		}
 		.background-slide4 {
 			width: 100%;
@@ -235,7 +236,6 @@ html, body {
 					width: 1008px;
 					height: 100%;
 					position: relative;
-					position: relative;
 				}				
 			}			
 			.content {
@@ -259,6 +259,7 @@ html, body {
 			}			
 			&.slide-0 {
 				background: #f0eff4;
+				z-index: 998;
 			}
 			&.slide-1 {
 				background: #f0eff4;
@@ -277,7 +278,6 @@ html, body {
 			}
 			&.slide-2 {
 				background: #f0eff4;
-				z-index: 997;
 				.map {
 					width: 1999px;
 					height: 1024px;
@@ -286,7 +286,8 @@ html, body {
 					margin-top: -512px;
 					margin-left: -1000px;
 					background: url(/gismeteo/ios-promo/images/slide-2.jpg) no-repeat;
-					position: absolute;						
+					position: absolute;	
+					z-index: 997;					
 				}
 				.favorite {
 					width: 1169px;
@@ -298,7 +299,7 @@ html, body {
 					margin-left: -649px;					
 					position: absolute;
 					//display: none;
-					z-index: 997;
+					z-index: 999;
 				}	
 				.favorite-shadow {
 					width: 1169px;
@@ -310,7 +311,7 @@ html, body {
 					margin-left: -649px;					
 					position: absolute;
 					opacity: 0;
-					z-index: 996;				
+					z-index: 998;				
 				}			
 				.content {
 					width: 520px;
@@ -353,13 +354,24 @@ html, body {
 						&.iphone-content-2 {
 							background: url(/gismeteo/ios-promo/images/iphone-content-2.jpg) no-repeat;
 							z-index: 996;
-							opacity: 0;	
+							opacity: 0;
 						}
 					}
+				}
+				.gistogramma {
+					width: 0px;
+					height: 49px;
+					background: url(/gismeteo/ios-promo/images/gistogramma.png) no-repeat;
+					top: 50%;
+					margin-top: 114px;
+					margin-left: -496px;
+					position: fixed;
+					z-index: 996;
 				}
 			}
 
 			&.slide-3 {
+				z-index: 997;	
 				&.with-background-slide3  {
 					width: 100%;
 					height: 100%;
