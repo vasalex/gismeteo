@@ -1,24 +1,140 @@
-var i=0;
-
 (function($) {
 	
 	jQuery.fn._scroll = function() {	
 		var $el = this,
-				step = 20,
-				_top = 0,
-				bStarted = false,
-				slider = 0,
-				$slide = null;
-				$gistogramma = $('.gistogramma'),
-				$favorite = $('.favorite'),
-				timeout = null,
-				top_percentage = -26,
-				max_top = ($('.slide').length-1)*-100,
-				distance = 100,
-				curr_top = 0,
-				scrollTimeout = null;
+				option = {
+					_width: $('body').width(), 
+					_height: $('body').height(),
+					slides: {from: {obj: null, num: 0, 'visible': 100}, to: {obj: null, num: 1, 'visible': 0}}, // 0 to 1
+					deltaY: 0,
+					arr_slides: [
+						$('.slide.slide-0'),
+						$('.slide.slide-1'),
+						$('.slide.slide-2'),
+						$('.slide.slide-3'),
+						$('.slide.slide-4')																										
+					],
+					position: {_top: 0, toUp: false, toDown: false}
+				};
+	
+    $el.scroll(function() {
+   		if ($(this).scrollTop() > option.position._top) {
+   			option.position.toDown = true;
+   			option.position.toUp = !option.position.toDown;	
+   		}
+   		else {
+   			option.position.toUp = true;
+   			option.position.toDown = !option.position.toUp;	   				
+   		}
+    	option.position._top = $(this).scrollTop();
+    	
+    	//Рассчёт текущего и следующего номера слайда
+    	option.slides.to.num = (option.position.toDown == true)?Math.ceil(option.position._top/option._height):Math.floor(option.position._top/option._height);
+    	option.slides.from.num = (option.position.toDown == true)?option.slides.to.num-1:option.slides.to.num+1;
+    	
+    	//Рассчёт процента видимости слайдов
+    	var num = option.slides.from.num,
+    			_max = 100;
+    	
+    	if (option.position.toUp)  { 
+    		num = option.slides.to.num;  
+    		_max=0;
+    	}
+    	var odlVisible = option.slides.to.visible;
+    	option.slides.from.visible = Math.round((Math.abs(_max-(option.position._top-option._height*num)/option._height*100))*10)/1000;
+    	option.slides.to.visible = 1-option.slides.from.visible;
+    	option.deltaY = Math.abs(odlVisible-option.slides.to.visible);
+    	
+    	animateSlider();  	
+    });
+    
+    
+    function animateSlider() { 
+    	//анимация текущего слайда
+    	switch (option.slides.from.num) { 
+    		case 0:
+    			roundVisible();
+    			var $slide = $('.slide.slide-2');
+    			$slide.find('.iphone-content.iphone-content-0').css('opacity', option.slides.from.visible);	
+    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.to.visible);	    			
+    		break;
+    		case 1:
+    			var $slide = $('.slide.slide-2');
+    			$slide.find('.iphone-content.iphone-content-0').css('opacity', 0);	    			
+    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.from.visible);	
+    			$slide.find('.iphone-content.iphone-content-2').css('opacity', option.slides.to.visible);
+    			if (option.slides.to.visible >= getPoint()) {	
+    				var $iphone = $slide.find('.iphone');
+    				if (!$iphone.hasClass('absolute')) {
+    					$iphone.css({
+    						'position': 'absolute',
+    						'margin-top': parseInt($iphone.css('margin-top'), 10) - option._height*option.slides.from.visible
+    					});
+    				}
+    			}    		
+    		break;
+    		case 2:
+    			var $slide = $('.slide.slide-2');
+    			$slide.find('.iphone-content.iphone-content-0').css('opacity', 0);	    			
+    			$slide.find('.iphone-content.iphone-content-1').css('opacity', 0);
+    			var $iphone = $slide.find('.iphone');
+    			if (!$iphone.hasClass('absolute')) {
+    				$iphone.css({'position': 'absolute'});
+    			}
+    			$slide = $('.slide.slide-3');
+    			if (option.slides.to.visible >= getPoint()) {
+    				$el.scrollTop(3*option._height);		
+    			}    			 		
+    		break;
+    		case 3:
+    		break;   		    		    		    			
+    	}
+    	
+    	//анимация следующего слайда
+    	switch (option.slides.from.to) { 
+    		case 0:
+    		break;
+    		case 1:
+    		break;
+    		case 2:
+    		break;
+    		case 3:
+    		break;
+    		case 4:
+    		break;    		    		    		    			
+    	}    	   		
+    }
+    
+		
+		$(window).resize(function() {
+	    clearTimeout($.data(this, 'resizeTimer'));
+	    $.data(this, 'resizeTimer', setTimeout(function() {
+	 				$(window).trigger('resizeEnd');
+	    }, 200));    
+		});
+	
+		$(window).bind('resizeEnd', function() {
+			option._width = $('body').width();
+			option._height = $('body').height();
+			option.position._top = $(this).scrollTop();
+		});
+		
+		function roundVisible() {
+			if (option.slides.from.visible < 0.1) option.slides.from.visible = 0;
+			if (option.slides.from.visible > 0.9) option.slides.from.visible = 1;			
+			if (option.slides.to.visible < 0.1) option.slides.to.visible = 0;
+			if (option.slides.to.visible > 0.9) option.slides.to.visible = 1;	
+		}
+		
+		function getPoint() {
+			if (option.deltaY<0.02) return 0.98;
+			if (option.deltaY<0.05) return 0.96;
+			if (option.deltaY<0.07) return 0.94;
+			if (option.deltaY<0.09) return 0.92;
+			return 0.9;									
+		}
 				
-				var callback = function(e) {
+				/*var callback = function(e) {
 					e.preventDefault();
 					$slide = $('.slide').eq(slider);
 						
@@ -61,7 +177,7 @@ var i=0;
 							setTimeout(function(){$el.removeClass('_scroll');}, 300);
 				    break; 	 					
 	 				}					
-				});
+				});*/
 			
 			/*switch (slider) {
 				case 0:

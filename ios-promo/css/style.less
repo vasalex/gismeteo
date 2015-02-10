@@ -162,7 +162,7 @@ html, body {
 		}		
 	}*/
 	.slider {
-		width: 102%;
+		width: 100%;
 		min-width: 1008px;
 		height: 100%;
 		position: fixed;
@@ -226,6 +226,7 @@ html, body {
 			position: relative;
 			overflow: hidden;
 			clear:both;
+			border-bottom: 1px solid #ff0000;
 			.slide-wrapper {
 				width: 1008px;
 				height: 100%;	
@@ -234,8 +235,6 @@ html, body {
 					width: 1008px;
 					height: 100%;
 					position: relative;
-					position: relative;
-					z-index: 999; 
 				}				
 			}			
 			.content {
@@ -262,6 +261,7 @@ html, body {
 			}
 			&.slide-1 {
 				background: #f0eff4;
+				z-index: 996;
 				.content {
 					width: 520px;
 					padding-left: 75px;
@@ -276,6 +276,7 @@ html, body {
 			}
 			&.slide-2 {
 				background: #f0eff4;
+				z-index: 997;
 				.map {
 					width: 1999px;
 					height: 1024px;
@@ -321,20 +322,42 @@ html, body {
 						font: 18px/24px HelveticaNeueLight, Arial, Helvetica, Sans-serif;
 					}					
 				}
-					.iphone {
-						width: 342px;
-						height: 720px;
+				.iphone {
+					width: 342px;
+					height: 720px;
+					top: 50%;
+					//left: 50%;
+					margin-top: -372px;
+					margin-left: 8px;
+					//margin-left: -454px;		
+					background: url(/gismeteo/ios-promo/images/iphone.png) no-repeat;	
+					position: fixed;	
+					z-index: 999;
+					.iphone-content {
+						width: 299px;
+						height: 531px;
 						top: 50%;
-						//left: 50%;
-						margin-top: -372px;
-						margin-left: 8px;
-						//margin-left: -454px;		
-						background: url(/gismeteo/ios-promo/images/iphone.png) no-repeat;	
-						position: fixed;	
-						z-index: 999;
-					}					
+						margin-top: -271px;
+						margin-left: 24px;
+						z-index: 998;
+						position: absolute;
+						&.iphone-content-0 {
+							background: url(/gismeteo/ios-promo/images/iphone-content-0.jpg) no-repeat;
+						}	
+						&.iphone-content-1 {
+							background: url(/gismeteo/ios-promo/images/iphone-content-1.jpg) no-repeat;
+							z-index: 997;
+							opacity: 0;
+						}	
+						&.iphone-content-2 {
+							background: url(/gismeteo/ios-promo/images/iphone-content-2.jpg) no-repeat;
+							z-index: 996;
+							opacity: 0;	
+						}
+					}
+				}
 			}
-			
+
 			&.slide-3 {
 				&.with-background-slide3  {
 					width: 100%;
