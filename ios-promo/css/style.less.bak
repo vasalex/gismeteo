@@ -397,25 +397,30 @@ html, body {
 				.clouds-glare {
 					opacity: 1;
 				}
-				/*.arc {
-					width: 2000px;
-					height: 331px;
-					background: url(/gismeteo/ios-promo/images/arc.png) no-repeat;
-					position: absolute;
-					top: 50%;
-					margin-left: -457px;
-					margin-top: -260px;					
-				}*/
 				.arc {
-					width: 2000px;
-					height: 331px;
-					background: url(/gismeteo/ios-promo/images/arc.png) no-repeat;
+					//width: 2000px;
+					//height: 331px;
+					//background: url(/gismeteo/ios-promo/images/arc.png) no-repeat;
 					position: absolute;
 					top: 50%;
 					left: 50%;
-					margin-left: -1000px;
-					margin-top: -260px;					
-				}						
+					//margin-left: -1000px;
+					//margin-top: -260px;
+					#arc {
+						opacity: 0.5;
+						position: relative;
+						z-index: 998;
+						border: 1px solid #fff;
+					}
+					.sun {
+						width: 55px;
+						height: 56px;
+						background: url(/gismeteo/ios-promo/images/sun.png) no-repeat;
+						position: absolute;
+						z-index: 999;
+						display: none;
+					}
+				}					
 			}
 			&.slide-4 {
 				.content {
