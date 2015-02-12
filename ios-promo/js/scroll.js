@@ -3,17 +3,17 @@
 	jQuery.fn._scroll = function() {	
 		var $el = this,
 				option = {
-					_width: $('body').width(), 
+					_width: $('.slide').width(), 
 					_height: $('body').height(),
 					slides: {from: {num: 0, 'visible': 100}, to: {num: 1, 'visible': 0}}, // 0 to 1
 					deltaY: 0,
 					position: {_top: 0, toUp: false, toDown: false},
-					arc: {angle: 0, len: 0, centerX: 0, centerY: 0, radius: 0}
+					arc: {sAngle: 0, centerX: 0, centerY: 0, radius: 0}
 				};			
+
+		arcDraw();		
 	
-		arcDraw();
-	
-    $el.scroll(function() {
+    $($el).scroll(function() {
    		if ($(this).scrollTop() > option.position._top) {
    			option.position.toDown = true;
    			option.position.toUp = !option.position.toDown;	
@@ -46,7 +46,6 @@
     	option.slides.to.visible = 1-option.slides.from.visible;
     	
     	option.deltaY = Math.abs(odlVisible-option.slides.to.visible);
-    	//console.log(option.deltaY);
     	animateSlider();  	
     });
     
@@ -55,12 +54,11 @@
     	if (option.position.toDown) {
 	    	switch (option.slides.from.num) { 
 	    		case 0:
-	    			//roundVisible();
 	    			var $slide = $('.slide.slide-2');
 	    			$slide.find('.iphone-content.iphone-content-0').css('opacity', option.slides.from.visible);	
 	    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.to.visible);
 	    			if (option.slides.to.visible>=0.5) {
-	    				var w = 1950*((0.5-(1-option.slides.to.visible))/0.5);
+	    				var w = 2000*((0.5-(1-option.slides.to.visible))/0.5);
 	    				$('.gistogramma').width(w);    				
 	    			}	    			
 	    		break;
@@ -85,7 +83,7 @@
 	    					$('.favorite-shadow').css('opacity', 1);
 	    				}		
 	    			}
-	    			$('.gistogramma').width(1950);	    			    			    		
+	    			$('.gistogramma').width(2000);	    			    			    		
 	    		break;
 	    		case 2:
 	    			var $slide = $('.slide.slide-2');
@@ -94,6 +92,9 @@
 	    			var $iphone = $slide.find('.iphone');
 	    			if ($iphone.css('position') == 'fixed') {
 	    				$iphone.css({'position': 'absolute'});
+	    				$slide.find('.iphone-content.iphone-content-2').css('opacity', 1);
+	    				$('.favorite').css({'top': '50%', 'opacity': 1});
+	    				$('.favorite-shadow').css('opacity', 1);	    				
 	    			}
 	    			$slide = $('.slide.slide-3');
 	    			if (option.slides.to.visible >= getPoint()) {
@@ -105,25 +106,46 @@
 		  				$('.slider .slide-3 .clouds-glare').css('opacity', 0);    					   							
 	    			}
 	    			$('.gistogramma').hide();
+	    			
 	    			if (option.slides.to.visible >= 0.2) {
-	    				var angle = (180-(option.arc.angle)*2)/2;
-	    				var newangle = option.arc.angle + angle*((0.8-(1-option.slides.to.visible))/0.8);
+	    				var angle = (180-(option.arc.sAngle)*2)/2;
+	    				var newangle = option.arc.sAngle + angle*((0.8-(1-option.slides.to.visible))/0.8);
 	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
-	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius-10;
+	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius;
 	    				sunDraw(cX, cY);
 	    			}    			 		
 	    		break;
 	    		case 3:
-	    			if (option.slides.to.visible <= 0.5) {
-	    				var angle = (180-(option.arc.angle)*2);
-	    				var newangle = angle/2+option.arc.angle + angle*((0.5-(0.5-option.slides.to.visible))/0.5);
+	    			var $slide = $('.slide.slide-2');
+	    			var $iphone = $slide.find('.iphone');
+	    			if ($iphone.css('position') == 'fixed') {
+	    				$iphone.css({'position': 'absolute'});
+	    				$slide.find('.iphone-content.iphone-content-0').css('opacity', 0);	    			
+	    				$slide.find('.iphone-content.iphone-content-1').css('opacity', 0);	    				
+	    				$slide.find('.iphone-content.iphone-content-2').css('opacity', 1);
+	    				$('.favorite').css({'top': '50%', 'opacity': 1});
+	    				$('.favorite-shadow').css('opacity', 1);
+	    			}	    		
+	    			if (!$('.background-wrapper').hasClass('slide-3')) {
+				 			if ($('.background-wrapper .background-slide3').css('opacity') == 0)
+								$('.background-wrapper .background-slide3').css('opacity', 1);
+		  				$('.background-wrapper').addClass('slide-3');
+		  				$('.slider .slide-3').removeClass('with-background-slide3');
+		  				$('.slider .slide-3 .clouds-glare').css('opacity', 0);
+	    			}
+	    			if (option.slides.to.visible>0 && option.slides.to.visible <= 0.4) {
+	    				var angle = (180-(option.arc.sAngle)*2);
+	    				var newangle = angle/2+option.arc.sAngle + angle*((0.8-(0.8-option.slides.to.visible))/0.8);
+	    				if (newangle > 180-(option.arc.sAngle)-1) newangle = 180-(option.arc.sAngle)-1;
+	    				//console.log(newangle);
 	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
-	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius+$('.sun').height()*option.slides.to.visible;
+	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius+$('.sun').height()*option.slides.to.visible; // $('.sun').height()*option.slides.to.visible  тупая подгонка
 	    				sunDraw(cX, cY);
 	    			}
 	    			else {
+	    				var angle = 180-(option.arc.sAngle)-1;
 	    				var cX = option.arc.centerX - Math.cos(degToRad(angle)) * option.arc.radius;
-	    				var cY = option.arc.centerY - Math.sin(degToRad(angle)) * option.arc.radius+$('.sun').height()*option.slides.to.visible;
+	    				var cY = option.arc.centerY - Math.sin(degToRad(angle)) * option.arc.radius+$('.sun').height()/2;
 	    				sunDraw(cX, cY);	    					
 	    			}
 	  				$('.background-wrapper .background-slide3').css('opacity', option.slides.from.visible);
@@ -131,16 +153,14 @@
 	    		break;
 	    	}
     	}
-    	else { 
-    		//console.log([option.slides.from.num, option.slides.from.visible, option.slides.to.num, option.slides.to.visible]);  		
+    	else { 		
 	    	switch (option.slides.from.num) {
 	    		case 1:
 	    			var $slide = $('.slide.slide-2');
 	    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.from.visible);	
 	    			$slide.find('.iphone-content.iphone-content-0').css('opacity', option.slides.to.visible);
 	    			if (option.slides.to.visible >= 0 && option.slides.to.visible <= 0.5) {
-	    				var w = 1950*((0.5-(0.5-option.slides.to.visible))/0.5);
-	    				w = 1950 - w;
+	    				var w = 2000 - 2000*((0.5-(0.5-option.slides.to.visible))/0.5);
 	    				$('.gistogramma').width(w);    				
 	    			}	
 	    			else
@@ -162,7 +182,6 @@
 		    		if (option.slides.to.visible >= 0 && option.slides.to.visible <= 0.8) {
 		    			$('.favorite-shadow').css('opacity', 0);
 		    			var _top = 50*(0.8-(0.8-option.slides.to.visible))/0.8;
-		    			console.log(_top);
 		    			_top = 50 - _top;
 		    			$('.favorite').css('top', _top+'%');	
 		    		}
@@ -175,11 +194,33 @@
 								$('.background-wrapper .background-slide3').css('opacity', 0);
 		  			$('.background-wrapper').removeClass('slide-3');
 		  			$('.slider .slide-3').addClass('with-background-slide3');
-		  			$('.slider .slide-3 .clouds-glare').css('opacity', 1);    					   								    		
+		  			$('.slider .slide-3 .clouds-glare').css('opacity', 1);
+	    			if (option.slides.from.visible >= 0) {
+	    				var angle = (180-(option.arc.sAngle)*2)/2;
+	    				var newangle = option.arc.sAngle + angle*((0.8-(1-option.slides.from.visible))/0.8);
+	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
+	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius;
+	    				sunDraw(cX, cY);
+	    			} 		  			    					   								    		
 	    		break;
 	    		case 4:
+	    			if (!$('.background-wrapper').hasClass('slide-3')) {
+				 			if ($('.background-wrapper .background-slide3').css('opacity') == 0)
+								$('.background-wrapper .background-slide3').css('opacity', 1);
+		  				$('.background-wrapper').addClass('slide-3');
+		  				$('.slider .slide-3').removeClass('with-background-slide3');
+		  				$('.slider .slide-3 .clouds-glare').css('opacity', 0);
+	    			}	    		
 	  				$('.background-wrapper .background-slide4').css('opacity', option.slides.from.visible);
-	  				$('.background-wrapper .background-slide3').css('opacity', option.slides.to.visible);			    			
+	  				$('.background-wrapper .background-slide3').css('opacity', option.slides.to.visible);
+	    			if (option.slides.from.visible>=0 && option.slides.from.visible <= 0.4) {
+	    				var angle = (180-(option.arc.sAngle)*2);
+	    				var newangle = angle/2+option.arc.sAngle + angle*((0.8-(0.8-option.slides.from.visible))/0.8);
+	    				if (newangle > 180-(option.arc.sAngle)-1) newangle = 180-(option.arc.sAngle)-1;
+	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
+	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius+$('.sun').height()*option.slides.from.visible;  //тупая подгонка
+	    				sunDraw(cX, cY);
+	    			}		    			
 	    		break;    		    		    		    			
 	    	}
 	    }    	   		
@@ -187,25 +228,18 @@
     
 		
 		$(window).resize(function() {
-	    clearTimeout($.data(this, 'resizeTimer'));
-	    $.data(this, 'resizeTimer', setTimeout(function() {
-	 				$(window).trigger('resizeEnd');
-	    }, 200));    
+	    //clearTimeout($.data(this, 'resizeTimer'));
+	    //$.data(this, 'resizeTimer', setTimeout(function() {
+	 		$(window).trigger('resizeEnd');
+	    //}, 100));    
 		});
 	
 		$(window).bind('resizeEnd', function() {
 			option._width = $('body').width();
 			option._height = $('body').height();
-			arcDraw();			
-			option.position._top = $(this).scrollTop();
+			arcDraw();
+			$(window).trigger('scroll');
 		});
-		
-		function roundVisible() {
-			if (option.slides.from.visible < 0.1) option.slides.from.visible = 0;
-			if (option.slides.from.visible > 0.9) option.slides.from.visible = 1;			
-			if (option.slides.to.visible < 0.1) option.slides.to.visible = 0;
-			if (option.slides.to.visible > 0.9) option.slides.to.visible = 1;	
-		}
 		
 		function getPoint() {
 			if (option.deltaY<0.01) return 0.99;			
@@ -216,12 +250,12 @@
 		}
 		
 		function arcDraw () {
-			var w = 1800;
+			var w = option._width;
 			var h = option._height*0.3;
 			
 			var a = w;
 			option.arc.radius = Math.sqrt(Math.pow(a, 2)+Math.pow(a/2, 2));
-			option.arc.centerY = option.arc.radius+10;
+			option.arc.centerY = option.arc.radius+20;
 			option.arc.centerX = w/2;
 			$('.arc').width(w);
 			$('.arc').height(h);
@@ -231,24 +265,24 @@
 			});	
 		
 			var tangA = a/(w/2);
-			var sAngle = Math.atan(tangA);
-			option.arc.angle = sAngle/ Math.PI * 180;
-			option.arc.len = option.arc.radius*(180-(sAngle/ Math.PI * 180)*2)*Math.PI/180; //длина дуги
-			var eAngle = degToRad(180-(sAngle/ Math.PI * 180));
+			var sAngle = Math.atan(tangA); //начальный угол в радианах
+			option.arc.sAngle = radToDeg(sAngle);// начальный угод в градусах
+			
+			var eAngle = degToRad(360-radToDeg(sAngle)); //конечный угол в радианах
+			sAngle = degToRad(180 + radToDeg(sAngle));//начальный угол в радианах
 			
 			var web_canvas = document.getElementById('arc');
 			var web_context = web_canvas.getContext("2d");
 			web_canvas.width = w;
 			web_canvas.height = h;
-			web_context.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle*Math.PI, eAngle*Math.PI, false);
-   		web_context.lineWidth = 2;
+			web_context.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, false);		
+   		web_context.lineWidth = 3;
     	web_context.strokeStyle = "#fff"; 
     	web_context.stroke();			
 		}	
 		
 		function sunDraw(cX, cY) {
-			if ( cX > 1771 ) return;
-			$('.sun').css({'left': cX, 'top': cY - parseInt($('.sun').height(), 10)/2}).show();
+			$('.sun').css({'left': cX, 'top': cY}).show();
 		}
 		
 		function degToRad (deg) { 
@@ -259,12 +293,11 @@
 			return rad / Math.PI * 180; 
 		}
 		
-    
 		$('.arrow a').on('click', function(e) {
 			e.preventDefault();	
 			_top= -100;	
       bStarted = true;
-			$el.animate({scrollTop: option._height}, 500);				
+			$(window).scrollTop(option._height);				
 		});	    	
 	}
 })(jQuery);

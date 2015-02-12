@@ -28,7 +28,7 @@ html, body {
 	height: 100%;	
 	margin: 0 auto;
 	position: relative;
-	overflow: hidden;
+	//overflow-x: hidden;
 	&.slide-0,  &.slide-1, &.slide-3, &.slide-2 {
 		.favorite-wrapper {
 			display: block;
@@ -44,8 +44,19 @@ html, body {
 		.background-slide3 {
 			width: 100%;
 			height: 100%;
-			background: url(/gismeteo/ios-promo/images/slide-3.png);
-			background-size: cover;
+			//background: url(/gismeteo/ios-promo/images/slide-3.png);
+			//background-size: cover;
+			background: #1b89ce; /* Old browsers */
+			/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFiODljZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyNGE2ZjciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+			background: -moz-linear-gradient(top,  #1b89ce 0%, #24a6f7 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1b89ce), color-stop(100%,#24a6f7)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  #1b89ce 0%,#24a6f7 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  #1b89ce 0%,#24a6f7 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  #1b89ce 0%,#24a6f7 100%); /* IE10+ */
+			background: linear-gradient(to bottom,  #1b89ce 0%,#24a6f7 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b89ce', endColorstr='#24a6f7',GradientType=0 ); /* IE6-8 */
+			
 			opacity: 0;	
 			top: 0;
 			position: absolute;	
@@ -60,14 +71,14 @@ html, body {
 			.clouds {
 				width: 1364px;
 				height: 375px;
-				background: url(/gismeteo/ios-promo/images/slide-4-clouds.png);
+				background: url(/gismeteo/ios-promo/images/slide-4-clouds.jpg);
 				top: 0;
 				left: 50%;
 				margin-left: -682px;
 				position: absolute;
 			}
 			.stars {
-				width: 2000px;
+				width: 100%;
 				height: 754px;
 				background: url(/gismeteo/ios-promo/images/slide-4-stars.png);
 				top: 0;
@@ -83,6 +94,7 @@ html, body {
 			.background-slide3 {
 				opacity: 1;
 				.clouds-glare {
+				//margin-left: -777px;
 					opacity: 1;
 				}
 			}
@@ -165,9 +177,8 @@ html, body {
 		width: 100%;
 		min-width: 1008px;
 		height: 100%;
-		position: fixed;
-		top: 0;
-		overflow: auto;
+		position: relative;
+		//overflow: auto;
 		.btns {
 			width: 426px;
 			display: inline-block;
@@ -226,7 +237,7 @@ html, body {
 			position: relative;
 			overflow: hidden;
 			clear:both;
-			border-bottom: 1px solid #ff0000;
+			//border-bottom: 1px solid #ff0000;
 			.slide-wrapper {
 				width: 1008px;
 				height: 100%;	
@@ -374,8 +385,18 @@ html, body {
 				&.with-background-slide3  {
 					width: 100%;
 					height: 100%;
-					background: url(/gismeteo/ios-promo/images/slide-3.png);
-					background-size: cover;
+					//background: url(/gismeteo/ios-promo/images/slide-3.png);
+					//background-size: cover;
+					background: #1b89ce; /* Old browsers */
+					/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+					background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFiODljZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyNGE2ZjciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+					background: -moz-linear-gradient(top,  #1b89ce 0%, #24a6f7 100%); /* FF3.6+ */
+					background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1b89ce), color-stop(100%,#24a6f7)); /* Chrome,Safari4+ */
+					background: -webkit-linear-gradient(top,  #1b89ce 0%,#24a6f7 100%); /* Chrome10+,Safari5.1+ */
+					background: -o-linear-gradient(top,  #1b89ce 0%,#24a6f7 100%); /* Opera 11.10+ */
+					background: -ms-linear-gradient(top,  #1b89ce 0%,#24a6f7 100%); /* IE10+ */
+					background: linear-gradient(to bottom,  #1b89ce 0%,#24a6f7 100%); /* W3C */
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b89ce', endColorstr='#24a6f7',GradientType=0 ); /* IE6-8 */					
 				}		
 				.slide-content {				
 					text-align: center;
@@ -407,10 +428,10 @@ html, body {
 					//margin-left: -1000px;
 					//margin-top: -260px;
 					#arc {
-						opacity: 0.5;
+						opacity: 1;
 						position: relative;
 						z-index: 998;
-						border: 1px solid #fff;
+						//border: 1px solid #fff;
 					}
 					.sun {
 						width: 55px;
@@ -418,6 +439,7 @@ html, body {
 						background: url(/gismeteo/ios-promo/images/sun.png) no-repeat;
 						position: absolute;
 						z-index: 999;
+						margin-top: -39px;
 						display: none;
 					}
 				}					
