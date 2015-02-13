@@ -228,6 +228,7 @@
 			option._width = $('body').width();
 			option._height = $('body').height();
 			arcDraw();
+			option.position._top = 0;
 			$(window).trigger('scroll');
 		});
 		
@@ -237,8 +238,6 @@
 			var w = (option._width>maxW?maxW:option._width);
 			w = (w<minW?minW:w);
 			var h = option._height;
-			
-			console.log([w, h]);
 			
 			var a = w;
 			option.arc.radius = Math.sqrt(Math.pow(a, 2)+Math.pow(a/2, 2));
