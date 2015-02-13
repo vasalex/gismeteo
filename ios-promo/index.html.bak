@@ -4,7 +4,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="/gismeteo/ios-promo/css/style.css" type="text/css">
 	<script type="text/javascript" src="/gismeteo/ios-promo/js/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="/gismeteo/ios-promo/js/jquery.event.scroll.js"></script>
 	<script type="text/javascript" src="/gismeteo/ios-promo/js/scroll.js"></script>
 </head>
 <body>
