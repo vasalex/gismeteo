@@ -9,9 +9,11 @@
 					deltaY: 0,
 					position: {_top: 0, toUp: false, toDown: false},
 					arc: {sAngle: 0, centerX: 0, centerY: 0, radius: 0}
-				};			
+				},
+				arcDrawProc = null; 			
 
-		arcDraw();		
+		arcDrawF();
+				
 	
     $($el).scroll(function() {
    		if ($(this).scrollTop() > option.position._top) {
@@ -95,6 +97,11 @@
 	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
 	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius;
 	    				sunDraw(cX, cY);
+	    				//var eAngle = degToRad(360-radToDeg(newangle)); //конечный угол в радианах
+							//var sAngle = degToRad(180 + radToDeg(option.arc.sAngle));
+							//arcDrawProc.clearRect();
+	    				//arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, 3, '#fff');
+	    				//arcDrawProc.stroke(); 
 	    			}    			 		
 	    		break;
 	    		case 3:
@@ -136,18 +143,17 @@
 	    				var angle = (180-(option.arc.sAngle)*2);
 	    				angle = angle/2+option.arc.sAngle + angle*((0.8-(0.8-option.slides.to.visible))/0.8);
 	    				if (angle>=maxangle) angle = maxangle;
-	    				console.log([maxangle, angle]);
 	    				var cX = option.arc.centerX - Math.cos(degToRad(angle)) * option.arc.radius;
 	    				var cY = option.arc.centerY - Math.sin(degToRad(angle)) * option.arc.radius+$('.sun').height()*option.slides.to.visible; // $('.sun').height()*option.slides.to.visible  тупая подгонка
-	    				sunDraw(cX, cY);	    				
+	    				sunDraw(cX, cY);
 	    			}
 	    			
 	  				$('.background-wrapper .background-slide3').css('opacity', option.slides.from.visible);
-	  				$('.background-wrapper .background-slide4').css('opacity', option.slides.to.visible);	    							   		
+	  				$('.background-wrapper .background-slide4').css('opacity', option.slides.to.visible);
 	    		break;
 	    	}
     	}
-    	else { 		
+    	else {
 	    	switch (option.slides.from.num) {
 	    		case 1:
 	    			var $slide = $('.slide.slide-2');
@@ -232,7 +238,7 @@
 			$(window).trigger('scroll');
 		});
 		
-		function arcDraw () {
+		function arcDrawF() {
 			var maxW = 2000;
 			var minW = 1024;
 			var w = (option._width>maxW?maxW:option._width);
@@ -257,15 +263,15 @@
 			var eAngle = degToRad(360-radToDeg(sAngle)); //конечный угол в радианах
 			sAngle = degToRad(180 + radToDeg(sAngle));//начальный угол в радианах
 			
-			var web_canvas = document.getElementById('arc');
-			var web_context = web_canvas.getContext("2d");
-			web_canvas.width = w;
-			web_canvas.height = h;
-			web_context.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, false);		
-   		web_context.lineWidth = 3;
-    	web_context.strokeStyle = "#fff"; 
-    	web_context.stroke();			
-		}	
+			arcDrawProc = new _arcDraw({
+				id: 'arc',
+				_width: w,
+				_height: h				
+			});			
+			arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, 3, '#fff');
+			arcDrawProc.stroke();		
+		}
+		
 		
 		function sunDraw(cX, cY) {
 			$('.sun').css({'left': cX, 'top': cY}).show();
@@ -287,3 +293,37 @@
 		});	    	
 	}
 })(jQuery);
+
+var _arcDraw = function(opt) {
+	this.opt = (typeof opt != 'undefined'?opt:{id: '0', _width: 0, _height: 0});
+	this.canvas = null;
+	this.sAngle = null;	
+	this.eAngle = null;
+	this.setCanvas = function() {
+		this.canvas = document.getElementById(this.opt.id);	
+		if (!this.canvas) {
+			console.log('html object '+ this.opt.id+ ' is undefined');
+			return;
+		}
+		this.canvas.context = this.canvas.getContext("2d");
+		this.canvas.width = this.opt._width;
+		this.canvas.height = this.opt._height;		
+	}
+	this.clearRect = function() {
+		this.canvas.context.clearRect(0, 0, this.opt._width, this.opt._height);
+	}
+	this.arc = function(cX, cY, radius, sAngle, eAngle, lineWidth, strokeStyle) {
+		if (!this.canvas.context) {
+			console.log('html canvas context is undefined');
+			return;
+		} 
+		this.canvas.context.arc(cX, cY, radius, sAngle, eAngle, false);	
+		this.canvas.context.lineWidth = lineWidth;
+    this.canvas.context.strokeStyle = strokeStyle;
+	}
+	this.stroke  = function() {
+		 this.canvas.context.stroke();
+	}
+	
+	this.setCanvas();
+}
