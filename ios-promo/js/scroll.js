@@ -258,6 +258,7 @@
 		
 			var tangA = a/(w/2);
 			var sAngle = Math.atan(tangA); //начальный угол в радианах
+
 			option.arc.sAngle = radToDeg(sAngle);// начальный угод в градусах
 			
 			var eAngle = degToRad(360-radToDeg(sAngle)); //конечный угол в радианах
