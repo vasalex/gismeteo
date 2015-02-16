@@ -10,7 +10,9 @@
 					position: {_top: 0, toUp: false, toDown: false},
 					arc: {sAngle: 0, centerX: 0, centerY: 0, radius: 0}
 				},
-				arcDrawProc = null; 			
+				arcDrawProc = null; 
+				
+		initArcDrawProc();						
 					
     $($el).scroll(function() {
    		if ($(this).scrollTop() > option.position._top) {
@@ -191,7 +193,7 @@
 	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
 	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius;
 							arcDraw(newangle);	    				
-	    				sunDraw(cX, cY);	    				
+	    				sunDraw(cX, cY);	    					    				
 	    			} 		  			    					   								    		
 	    		break;
 	    		case 4:
@@ -210,7 +212,7 @@
 	    				if (newangle > 180-(option.arc.sAngle)-1) newangle = 180-(option.arc.sAngle)-1;
 	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
 	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius+$('.sun').height()*option.slides.from.visible;  //тупая подгонка
-	    				arcDraw(newangle);
+							arcDraw(newangle);
 	    				sunDraw(cX, cY);
 	    			}		    			
 	    		break;    		    		    		    			
@@ -218,16 +220,6 @@
 	    }    	   		
     }
     
-    function arcDraw(angle) {
-			var sAngle = degToRad(180 + option.arc.sAngle);	    				
-	    var eAngle = degToRad(180 + angle+0.2);
-	    if (!arcDrawProc) initArcDrawProc();	    
-	    arcDrawProc.clearRect();
-	    arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, 3, '#fff');
-	    arcDrawProc.darc(option.arc.centerX, option.arc.centerY, option.arc.radius, eAngle+2*Math.PI/180, degToRad(360-option.arc.sAngle), Math.PI/180, 3, '#fff');	    		
-    }
-    
-		
 		$(window).resize(function() {
 	    //clearTimeout($.data(this, 'resizeTimer'));
 	    //$.data(this, 'resizeTimer', setTimeout(function() {
@@ -239,8 +231,18 @@
 			option._width = $('body').width();
 			option._height = $('body').height();
 			option.position._top = 0;
+			initArcDrawProc();
 			$(window).trigger('scroll');
-		});
+		});    
+    
+    function arcDraw(angle) {
+			var sAngle = degToRad(180 + option.arc.sAngle);	    				
+	    var eAngle = degToRad(180 + angle+0.2);
+	    if (!arcDrawProc) initArcDrawProc();	    
+	    arcDrawProc.clearRect();
+	    arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, 3, '#fff');
+	    arcDrawProc.darc(option.arc.centerX, option.arc.centerY, option.arc.radius, eAngle+2*Math.PI/180, degToRad(360-option.arc.sAngle), Math.PI/180, 3, '#fff');	    		
+    }
 		
 		function initArcDrawProc() {
 			var maxW = 2000;
