@@ -11,10 +11,7 @@
 					arc: {sAngle: 0, centerX: 0, centerY: 0, radius: 0}
 				},
 				arcDrawProc = null; 			
-
-		arcDrawF();
-				
-	
+					
     $($el).scroll(function() {
    		if ($(this).scrollTop() > option.position._top) {
    			option.position.toDown = true;
@@ -96,12 +93,8 @@
 	    				var newangle = option.arc.sAngle + angle*((0.8-(1-option.slides.to.visible))/0.8);
 	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
 	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius;
-	    				sunDraw(cX, cY);
-	    				//var eAngle = degToRad(360-radToDeg(newangle)); //конечный угол в радианах
-							//var sAngle = degToRad(180 + radToDeg(option.arc.sAngle));
-							//arcDrawProc.clearRect();
-	    				//arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, 3, '#fff');
-	    				//arcDrawProc.stroke(); 
+	    				arcDraw(newangle);
+	    				sunDraw(cX, cY); 
 	    			}    			 		
 	    		break;
 	    		case 3:
@@ -145,6 +138,7 @@
 	    				if (angle>=maxangle) angle = maxangle;
 	    				var cX = option.arc.centerX - Math.cos(degToRad(angle)) * option.arc.radius;
 	    				var cY = option.arc.centerY - Math.sin(degToRad(angle)) * option.arc.radius+$('.sun').height()*option.slides.to.visible; // $('.sun').height()*option.slides.to.visible  тупая подгонка
+	    				arcDraw(angle);
 	    				sunDraw(cX, cY);
 	    			}
 	    			
@@ -196,7 +190,8 @@
 	    				var newangle = option.arc.sAngle + angle*((0.8-(1-option.slides.from.visible))/0.8);
 	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
 	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius;
-	    				sunDraw(cX, cY);
+							arcDraw(newangle);	    				
+	    				sunDraw(cX, cY);	    				
 	    			} 		  			    					   								    		
 	    		break;
 	    		case 4:
@@ -215,11 +210,21 @@
 	    				if (newangle > 180-(option.arc.sAngle)-1) newangle = 180-(option.arc.sAngle)-1;
 	    				var cX = option.arc.centerX - Math.cos(degToRad(newangle)) * option.arc.radius;
 	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius+$('.sun').height()*option.slides.from.visible;  //тупая подгонка
+	    				arcDraw(newangle);
 	    				sunDraw(cX, cY);
 	    			}		    			
 	    		break;    		    		    		    			
 	    	}
 	    }    	   		
+    }
+    
+    function arcDraw(angle) {
+			var sAngle = degToRad(180 + option.arc.sAngle);	    				
+	    var eAngle = degToRad(180 + angle+0.2);
+	    if (!arcDrawProc) initArcDrawProc();	    
+	    arcDrawProc.clearRect();
+	    arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, 3, '#fff');
+	    arcDrawProc.darc(option.arc.centerX, option.arc.centerY, option.arc.radius, eAngle+2*Math.PI/180, degToRad(360-option.arc.sAngle), Math.PI/180, 3, '#fff');	    		
     }
     
 		
@@ -233,12 +238,11 @@
 		$(window).bind('resizeEnd', function() {
 			option._width = $('body').width();
 			option._height = $('body').height();
-			arcDraw();
 			option.position._top = 0;
 			$(window).trigger('scroll');
 		});
 		
-		function arcDrawF() {
+		function initArcDrawProc() {
 			var maxW = 2000;
 			var minW = 1024;
 			var w = (option._width>maxW?maxW:option._width);
@@ -258,9 +262,7 @@
 		
 			var tangA = a/(w/2);
 			var sAngle = Math.atan(tangA); //начальный угол в радианах
-
 			option.arc.sAngle = radToDeg(sAngle);// начальный угод в градусах
-			
 			var eAngle = degToRad(360-radToDeg(sAngle)); //конечный угол в радианах
 			sAngle = degToRad(180 + radToDeg(sAngle));//начальный угол в радианах
 			
@@ -268,11 +270,8 @@
 				id: 'arc',
 				_width: w,
 				_height: h				
-			});			
-			arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, 3, '#fff');
-			arcDrawProc.stroke();		
+			});
 		}
-		
 		
 		function sunDraw(cX, cY) {
 			$('.sun').css({'left': cX, 'top': cY}).show();
@@ -313,15 +312,39 @@ var _arcDraw = function(opt) {
 	this.clearRect = function() {
 		this.canvas.context.clearRect(0, 0, this.opt._width, this.opt._height);
 	}
+	
+	this.beginPath = function(){
+		this.canvas.context.beginPath();
+	}
+	
+	this.closePath = function(){
+		this.canvas.context.closePath();		
+	}
+	
+	this.darc = function(cX, cY, radius, sAngle, eAngle, step, lineWidth, strokeStyle) {
+		while(sAngle < eAngle) {
+			eA = sAngle+step;
+			this.beginPath();
+			this.arc(cX, cY, radius, sAngle, eA, lineWidth, strokeStyle);
+			this.stroke();
+			this.closePath();
+			sAngle = eA + step;						
+		}
+	}	
+	
 	this.arc = function(cX, cY, radius, sAngle, eAngle, lineWidth, strokeStyle) {
 		if (!this.canvas.context) {
 			console.log('html canvas context is undefined');
 			return;
 		} 
+		this.beginPath();
 		this.canvas.context.arc(cX, cY, radius, sAngle, eAngle, false);	
 		this.canvas.context.lineWidth = lineWidth;
     this.canvas.context.strokeStyle = strokeStyle;
-	}
+    this.stroke();
+    this.closePath();
+	}	
+	
 	this.stroke  = function() {
 		 this.canvas.context.stroke();
 	}
