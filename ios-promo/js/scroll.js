@@ -58,24 +58,27 @@
 	    			var $slide = $('.slide.slide-2');
 	    			$slide.find('.iphone-content.iphone-content-0').css('opacity', option.slides.from.visible);	
 	    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.to.visible);
-	    			if (option.slides.to.visible>=0.5) {
+	    			/*if (option.slides.to.visible>=0.5) {
 	    				var w = 2000*((0.5-(1-option.slides.to.visible))/0.5);
 	    				$('.gistogramma').width(w);    				
-	    			}	    			
+	    			}*/    			
 	    		break;
 	    		case 1:
 	    			var $slide = $('.slide.slide-2');
 	    			$slide.find('.iphone-content.iphone-content-0').css('opacity', 0);	    			
-	    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.from.visible);	
-	    			$slide.find('.iphone-content.iphone-content-2').css('opacity', option.slides.to.visible);  			
-	    			if (option.slides.to.visible >= 0.2) {
-	    				var _top = 50*(0.8-(1-option.slides.to.visible))/0.8;
+	    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.from.visible);
+	    			$slide.find('.iphone-content.iphone-content-2').css('opacity', option.slides.to.visible);
+	    			$slide.find('.map').css('opacity', option.slides.to.visible);		    			
+	    			if (option.slides.to.visible >= 0.4) {
+	    				var _top = 50*(0.6-(1-option.slides.to.visible))/0.6;
+	    				if (_top>50) _top = 50;
 	    				$('.favorite').css('top', _top+'%');
-	    				if (_top > 47) {
-	    					$('.favorite-shadow').css('opacity', 1);
+	    				if (option.slides.to.visible >= 0.5) {
+	    					var _opacity = 1*(0.5-(1-option.slides.to.visible))/0.5;
+	    					$('.favorite-shadow').css('opacity', _opacity);	
 	    				}		
 	    			}
-	    			$('.gistogramma').width(2000);	    			    			    		
+	    			//$('.gistogramma').width(2000);    			    			    		
 	    		break;
 	    		case 2:
 	    			var $slide = $('.slide.slide-2');
@@ -84,11 +87,12 @@
 	    			var $iphone = $slide.find('.iphone');
 	    			if ($iphone.css('position') == 'fixed') {
 	    				$iphone.css({'position': 'absolute'});
-	    				$slide.find('.iphone-content.iphone-content-2').css('opacity', 1);
-	    				$('.favorite').css({'top': '50%', 'opacity': 1});
-	    				$('.favorite-shadow').css('opacity', 1);	    				
+	    				$slide.find('.iphone-content.iphone-content-2').css('opacity', 1);    				
 	    			}
-	    			$('.gistogramma').hide();
+	    			
+	    			$slide.find('.map').css({'position': 'absolute', 'opacity': 1});
+	    			$slide.find('.favorite').css({'position': 'absolute', 'top': '50%'});
+	    			$slide.find('.favorite-shadow').css({'position': 'absolute', 'opacity': 1});
 	    			
 	    			if (option.slides.to.visible >= 0.2) {
 	    				var angle = (180-(option.arc.sAngle)*2)/2;
@@ -97,7 +101,9 @@
 	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius;
 	    				arcDraw(newangle);
 	    				sunDraw(cX, cY); 
-	    			}    			 		
+	    			}
+	    			
+	    			//$('.gistogramma').hide();    			 		
 	    		break;
 	    		case 3:
 				 		if ($('.background-wrapper .background-slide3').css('opacity') == 0) {
@@ -146,6 +152,11 @@
 	    			
 	  				$('.background-wrapper .background-slide3').css('opacity', option.slides.from.visible);
 	  				$('.background-wrapper .background-slide4').css('opacity', option.slides.to.visible);
+	  				
+	  				
+	    			$slide.find('.map').css({'position': 'absolute', 'opacity': 1});
+	    			$slide.find('.favorite').css({'position': 'absolute', 'top': '50%'});
+	    			$slide.find('.favorite-shadow').css({'position': 'absolute', 'opacity': 1});	  				
 	    		break;
 	    	}
     	}
@@ -155,12 +166,17 @@
 	    			var $slide = $('.slide.slide-2');
 	    			$slide.find('.iphone-content.iphone-content-1').css('opacity', option.slides.from.visible);	
 	    			$slide.find('.iphone-content.iphone-content-0').css('opacity', option.slides.to.visible);
-	    			if (option.slides.to.visible >= 0 && option.slides.to.visible <= 0.5) {
+	    			/*if (option.slides.to.visible >= 0 && option.slides.to.visible <= 0.5) {
 	    				var w = 2000 - 2000*((0.5-(0.5-option.slides.to.visible))/0.5);
 	    				$('.gistogramma').width(w);    				
 	    			}	
 	    			else
-	    				$('.gistogramma').width(0);		    			    		
+	    				$('.gistogramma').width(0);	
+	    			*/
+	    			
+	    			$slide.find('.favorite').css({'top': '-50%'});
+	    			$slide.find('.favorite-shadow').css({'opacity': 0});	
+	    				    			    		
 	    		break;
 	    		case 2:
 	    			var $slide = $('.slide.slide-2');
@@ -171,15 +187,22 @@
 	    				$iphone.css({
 	    					'position': 'fixed',
 	    				});
-	    			}    				
-		    		if (option.slides.to.visible >= 0 && option.slides.to.visible <= 1) {
-		    			$('.favorite-shadow').css('opacity', 0);
-		    			var _top = 50*(0.8-(0.8-option.slides.to.visible))/0.8;
-		    			_top = 50 - _top;
-		    			$('.favorite').css('top', _top+'%');	
-		    		}	
-		    		if (parseInt($('.favorite').css('top'),10) < -50) $('.favorite').css('top', '-50%');		    				
-	    			$('.gistogramma').show();
+	    			}
+	    			$slide.find('.map').css({'position': 'fixed', 'opacity':  option.slides.from.visible});
+	    			$slide.find('.favorite').css({'position': 'fixed'});
+	    			$slide.find('.favorite-shadow').css({'position': 'fixed'});
+	    			
+	    			if (option.slides.from.visible >= 0.4 && option.slides.from.visible <= 1) {
+	    				var _top = 50-100*((1-option.slides.from.visible)/0.6);
+	    				if (_top < -50) _top = -50;
+	    				$('.favorite').css('top', _top+'%');
+	    				if (option.slides.from.visible >= 0.5 && option.slides.from.visible <= 1) {
+	    					var _opacity = 1-(1-option.slides.from.visible)/0.3;
+	    					if (_opacity < 0) _opacity = 0;
+	    					$('.favorite-shadow').css('opacity', _opacity);	
+	    				}		
+	    			}	    				
+	    			//$('.gistogramma').show();
 	    		break;
 	    		case 3:
 				 		if ($('.background-wrapper .background-slide3').css('opacity') == 1)
@@ -187,6 +210,12 @@
 		  			$('.background-wrapper').removeClass('slide-3');
 		  			$('.slider .slide-3').addClass('with-background-slide3');
 		  			$('.slider .slide-3 .clouds-glare').css('opacity', 1);
+		  			
+	    			var $slide = $('.slide.slide-2');
+	    			$slide.find('.map').css({'position': 'absolute', 'opacity': 1});
+	    			$slide.find('.favorite').css({'position': 'absolute', 'top': '50%'});
+	    			$slide.find('.favorite-shadow').css({'position': 'absolute', 'opacity': 1});
+	    					  			
 	    			if (option.slides.from.visible >= 0) {
 	    				var angle = (180-(option.arc.sAngle)*2)/2;
 	    				var newangle = option.arc.sAngle + angle*((0.8-(1-option.slides.from.visible))/0.8);
@@ -194,7 +223,7 @@
 	    				var cY = option.arc.centerY - Math.sin(degToRad(newangle)) * option.arc.radius;
 							arcDraw(newangle);	    				
 	    				sunDraw(cX, cY);	    					    				
-	    			} 		  			    					   								    		
+	    			}
 	    		break;
 	    		case 4:
 	    			if (!$('.background-wrapper').hasClass('slide-3')) {
@@ -206,6 +235,12 @@
 	    			}	    		
 	  				$('.background-wrapper .background-slide4').css('opacity', option.slides.from.visible);
 	  				$('.background-wrapper .background-slide3').css('opacity', option.slides.to.visible);
+	  				
+	    			var $slide = $('.slide.slide-2');
+	    			$slide.find('.map').css({'position': 'absolute', 'opacity': 1});
+	    			$slide.find('.favorite').css({'position': 'absolute', 'top': '50%'});
+	    			$slide.find('.favorite-shadow').css({'position': 'absolute', 'opacity': 1});
+	    				  				
 	    			if (option.slides.from.visible>=0 && option.slides.from.visible <= 0.4) {
 	    				var angle = (180-(option.arc.sAngle)*2);
 	    				var newangle = angle/2+option.arc.sAngle + angle*((0.8-(0.8-option.slides.from.visible))/0.8);
@@ -240,8 +275,8 @@
 	    var eAngle = degToRad(180 + angle+0.2);
 	    if (!arcDrawProc) initArcDrawProc();	    
 	    arcDrawProc.clearRect();
-	    arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle, 3, '#fff');
-	    arcDrawProc.darc(option.arc.centerX, option.arc.centerY, option.arc.radius, eAngle+2*Math.PI/180, degToRad(360-option.arc.sAngle)-Math.PI/180, Math.PI/180, 3, '#fff');	    		
+	    arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle-Math.PI/180, false, 3, '#fff');
+	    arcDrawProc.darc(option.arc.centerX, option.arc.centerY, option.arc.radius, eAngle+2*Math.PI/180, degToRad(360-option.arc.sAngle), true, Math.PI/180, 3, '#fff');	     		
     }
 		
 		function initArcDrawProc() {
@@ -311,6 +346,7 @@ var _arcDraw = function(opt) {
 		this.canvas.width = this.opt._width;
 		this.canvas.height = this.opt._height;		
 	}
+
 	this.clearRect = function() {
 		this.canvas.context.clearRect(0, 0, this.opt._width, this.opt._height);
 	}
@@ -323,24 +359,32 @@ var _arcDraw = function(opt) {
 		this.canvas.context.closePath();		
 	}
 	
-	this.darc = function(cX, cY, radius, sAngle, eAngle, step, lineWidth, strokeStyle) {
-		while(sAngle < eAngle) {
+	this.darc = function(cX, cY, radius, sAngle, eAngle, counterclockwise, step, lineWidth, strokeStyle) {
+		while(sAngle < eAngle && counterclockwise == false) {
 			eA = sAngle+step;
 			this.beginPath();
-			this.arc(cX, cY, radius, sAngle, eA, lineWidth, strokeStyle);
+			this.arc(cX, cY, radius, sAngle, eA, counterclockwise, lineWidth, strokeStyle);
 			this.stroke();
 			this.closePath();
 			sAngle = eA + step;						
 		}
-	}	
-	
-	this.arc = function(cX, cY, radius, sAngle, eAngle, lineWidth, strokeStyle) {
+		while(eAngle > sAngle && counterclockwise == true) {
+			eA = eAngle-step;
+			this.beginPath();
+			this.arc(cX, cY, radius, eAngle, eA, counterclockwise, lineWidth, strokeStyle);
+			this.stroke();
+			this.closePath();
+			eAngle = eA - step;						
+		}
+	}
+
+	this.arc = function(cX, cY, radius, sAngle, eAngle, counterclockwise, lineWidth, strokeStyle) {
 		if (!this.canvas.context) {
 			console.log('html canvas context is undefined');
 			return;
 		} 
 		this.beginPath();
-		this.canvas.context.arc(cX, cY, radius, sAngle, eAngle, false);	
+		this.canvas.context.arc(cX, cY, radius, sAngle, eAngle, counterclockwise);	
 		this.canvas.context.lineWidth = lineWidth;
     this.canvas.context.strokeStyle = strokeStyle;
     this.stroke();

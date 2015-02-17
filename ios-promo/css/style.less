@@ -41,6 +41,24 @@ html, body {
 		left: 0;
 		position: fixed;
 		display: none;
+		.background-slide2 {
+			width: 100%;
+			height: 100%;
+			top: 0;
+			position: absolute;	
+			.map {
+				width: 1999px;
+				height: 1024px;
+				top: 50%;
+				left: 50%;
+				margin-top: -512px;
+				margin-left: -1000px;
+				background: url(/gismeteo/ios-promo/images/slide-2.jpg) no-repeat;
+				position: absolute;	
+				z-index: 997;	
+				opacity: 0;
+			}		 
+		}
 		.background-slide3 {
 			width: 100%;
 			height: 100%;
@@ -87,14 +105,14 @@ html, body {
 				position: absolute;
 			}					
 		}
-		&.slide-3{
+		&.slide-2{
 			display: block;
 		}
 		&.slide-3 {
+			display: block;
 			.background-slide3 {
 				opacity: 1;
 				.clouds-glare {
-				//margin-left: -777px;
 					opacity: 1;
 				}
 			}
@@ -272,8 +290,7 @@ html, body {
 				z-index: 998;
 			}
 			&.slide-1 {
-				background: #f0eff4;
-				z-index: 996;
+				z-index: 997;
 				.content {
 					width: 520px;
 					padding-left: 75px;
@@ -287,7 +304,6 @@ html, body {
 				}
 			}
 			&.slide-2 {
-				background: #f0eff4;
 				.map {
 					width: 1999px;
 					height: 1024px;
@@ -296,9 +312,12 @@ html, body {
 					margin-top: -512px;
 					margin-left: -1000px;
 					background: url(/gismeteo/ios-promo/images/slide-2.jpg) no-repeat;
-					position: absolute;	
-					z-index: 997;					
-				}
+					//position: absolute;	
+					position: fixed;
+					z-index: 996;	
+					opacity: 0;
+					display: block;
+				}					
 				.favorite {
 					width: 1169px;
 					height: 551px;
@@ -307,7 +326,8 @@ html, body {
 					left: 50%;
 					margin-top: -303px;
 					margin-left: -649px;					
-					position: absolute;
+					//position: absolute;
+					position: fixed;
 					//display: none;
 					z-index: 999;
 				}	
@@ -318,8 +338,9 @@ html, body {
 					top: 50%;
 					left: 50%;
 					margin-top: -303px;
-					margin-left: -649px;					
-					position: absolute;
+					margin-left: -649px;
+					position: fixed;					
+					//position: absolute;
 					opacity: 0;
 					z-index: 998;				
 				}			
@@ -340,12 +361,13 @@ html, body {
 					height: 720px;
 					top: 50%;
 					//left: 50%;
-					margin-top: -372px;
+					margin-top: -360px;
 					margin-left: 8px;
 					//margin-left: -454px;		
 					background: url(/gismeteo/ios-promo/images/iphone.png) no-repeat;	
 					position: fixed;	
 					z-index: 999;
+					zoom: 88%;
 					.iphone-content {
 						width: 299px;
 						height: 531px;
@@ -459,10 +481,11 @@ html, body {
 							width: 342px;
 							height: 720px;
 							content: url(/gismeteo/ios-promo/images/iphone-slide-4.png);
-							margin-left: -696px;
-							margin-top: -102px;
+							margin-left: -793px;
+							margin-top: -53px;
 							position: absolute;
-							z-index: 999;		 			
+							z-index: 999;	
+							zoom: 88%;	 			
 				 		}
 				 	}					
 				}
