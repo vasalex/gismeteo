@@ -275,8 +275,8 @@
 	    var eAngle = degToRad(180 + angle+0.2);
 	    if (!arcDrawProc) initArcDrawProc();	    
 	    arcDrawProc.clearRect();
-	    arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle-Math.PI/180, false, 3, '#fff');
-	    arcDrawProc.darc(option.arc.centerX, option.arc.centerY, option.arc.radius, eAngle+2*Math.PI/180, degToRad(360-option.arc.sAngle), true, Math.PI/180, 3, '#fff');	     		
+	    arcDrawProc.arc(option.arc.centerX, option.arc.centerY, option.arc.radius, sAngle, eAngle-Math.PI/180, false, 2, '#fff');
+	    arcDrawProc.darc(option.arc.centerX, option.arc.centerY, option.arc.radius, eAngle+2*Math.PI/180, degToRad(360-option.arc.sAngle), true, Math.PI/180/2, 2, '#fff');	     		
     }
 		
 		function initArcDrawProc() {
